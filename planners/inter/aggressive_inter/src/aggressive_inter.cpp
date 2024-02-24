@@ -17,7 +17,7 @@ namespace aggressive_inter
     uint32_t AggressiveInter::makePlan(const geometry_msgs::PoseStamped &start, const geometry_msgs::PoseStamped &goal,
                                        std::vector<geometry_msgs::PoseStamped> &plan, double &cost, std::string &message)
     {
-        inter_util::InterUtil::select_heuristic(simAgentInfos);
+        
 
         boost::unique_lock<boost::mutex> plan_lock(plan_mtx_);
         boost::unique_lock<boost::mutex> speed_lock(speed_mtx_);
@@ -32,9 +32,17 @@ namespace aggressive_inter
         for (const auto &simAgentInfo : simAgentInfos)
         {
             geometry_msgs::Point32 point = simAgentInfo.point;
+            std::string ped_type = simAgentInfo.type; // Type of ped 
+            std::string id = simAgentInfo.id; // ID of ped 
+            std::string  social_state = simAgentInfo.social_state; // Social state of ped 
+
+
+
             double distance = std::sqrt(std::pow(point.x - robot_x, 2) + std::pow(point.y - robot_y, 2)) + std::pow(point.z - robot_z, 2);
             minDistance = std::min(minDistance, distance);
             distances.push_back(distance);
+
+            inter_util::InterUtil::select_heuristic(ped_type,point,id ,social_state); // function for heuristic planner switching
         }
         inter_util::InterUtil::checkDanger(dangerPublisher, distances, danger_threshold);
         ROS_WARN("Danger level: %f", inter_util::InterUtil::getDangerLevel(distances));
@@ -80,6 +88,8 @@ namespace aggressive_inter
             simAgentInfo.type = agent_state.type;
             simAgentInfo.id = agent_state.id;
             simAgentInfos.push_back(simAgentInfo);
+
+
         }
     }
 

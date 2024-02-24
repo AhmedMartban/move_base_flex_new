@@ -25,7 +25,7 @@ namespace inter_util
         static double getDangerLevel(const std::vector<double>& terms);
         static void publishSignal(ros::Publisher& publisher);
         static void checkDanger(ros::Publisher& publisher, const std::vector<double>& terms, double threshold);
-        static void select_heuristic(const std::vector<inter_util::SimAgentInfo>&);
+        static void select_heuristic(std::string ped_type,geometry_msgs::Point32 pedestrian_point,std::string id,std::string  social_state);
     };
 }
 
