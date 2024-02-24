@@ -17,6 +17,8 @@ namespace aggressive_inter
     uint32_t AggressiveInter::makePlan(const geometry_msgs::PoseStamped &start, const geometry_msgs::PoseStamped &goal,
                                        std::vector<geometry_msgs::PoseStamped> &plan, double &cost, std::string &message)
     {
+        inter_util::InterUtil::select_heuristic(simAgentInfos);
+
         boost::unique_lock<boost::mutex> plan_lock(plan_mtx_);
         boost::unique_lock<boost::mutex> speed_lock(speed_mtx_);
 

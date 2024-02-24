@@ -54,4 +54,33 @@ namespace inter_util
             publishSignal(publisher);
         }
     }
+
+
+
+    void InterUtil::select_heuristic(const std::vector<inter_util::SimAgentInfo> &simAgentInfos)
+    {
+        for (const auto &agent : simAgentInfos)
+        {
+            std::string ped_type = agent.type; // Type of ped 
+            geometry_msgs::Point32 pedestrian_point = agent.point; // Position of ped 
+            std::string id = agent.id; // ID of ped 
+            std::string  social_state = agent.social_state; // Social state of ped 
+
+            ROS_INFO("Pedestrian Type: %s, Pedestrian Point: (%f, %f, %f), ID: %u, Social State: %u",
+                    ped_type.c_str(), pedestrian_point.x, pedestrian_point.y, pedestrian_point.z, id, social_state);
+
+            //Switch to Polite:
+            
+            
+
+
+
+            //Switch to Sideways:
+
+
+        }
+    }
+
+
+   
 }
